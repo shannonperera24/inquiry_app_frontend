@@ -1,0 +1,103 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* LANDING PAGE */
+.landing-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom left, #ffffff, #fedc33);
+  position: relative;
+}
+
+.landing-login {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.landing-card {
+  background: #ffffff;
+  padding: 3rem 4rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 650px;
+}
+
+.login-btn {
+  background-color: #fedc33; 
+  color: #333333;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+  border: none;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #d9bc2b; 
+  color: #000;
+}
+
+.login-icon {
+  font-size: 1rem;
+}
+
+.landing-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem; 
+  text-align: center;
+}
+
+.landing-logo {
+  width: 150px;
+  height: auto;
+}
+
+.landing-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333333; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+.landing-main .btn-success {
+  background-color: #28a745; 
+  border: none;
+  font-weight: normal;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.landing-main .btn-success:hover {
+  background-color: #218838; 
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .landing-title {
+    font-size: 2rem;
+  }
+  .landing-logo {
+    width: 120px;
+  }
+  .login-btn {
+    font-size: 0.9rem; 
+    padding: 0.5rem 1rem;
+  }
+}
