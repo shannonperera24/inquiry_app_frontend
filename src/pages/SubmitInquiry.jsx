@@ -33,10 +33,10 @@ const SubmitInquiry = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-            const res = await axios.get("http://localhost:3000/categories");
-            setCategories(res.data);
+                const res = await axios.get("http://localhost:3000/categories");
+                setCategories(res.data);
             } catch (error) {
-            console.error("Error fetching categories:", error);
+                console.error("Error fetching categories:", error);
             }
         };
         fetchCategories();
@@ -67,9 +67,7 @@ const SubmitInquiry = () => {
         });
 
         try {
-        await axios.post('http://localhost:3000/inquiries', formData, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        });
+        await axios.post('http://localhost:3000/inquiries', formData);
 
         alert('Inquiry submitted successfully!');
         navigate('/');
