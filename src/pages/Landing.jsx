@@ -18,7 +18,7 @@ const Landing = () => {
                 <img src='/src/assets/sl-army-logo.png' className='landing-logo' />
                 <h1 className='landing-title'>Inquiry Management System</h1>
                 <button className='btn btn-success' 
-                onClick={() => navigate("/login")}>
+                onClick={() => navigate("/submit-inquiry")}>
                     Submit Inquiry
                 </button>
             </div>

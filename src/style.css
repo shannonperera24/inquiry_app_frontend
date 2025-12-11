@@ -1,5 +1,6 @@
 * {
   font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
 }
 
 /* LANDING PAGE */
@@ -38,15 +39,16 @@
   align-items: center;
   gap: 0.5rem; 
   border: none;
-  font-size: 0.9rem;
   padding: 0.75rem 1.5rem;
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
-.login-btn:hover {
-  background-color: #d9bc2b; 
-  color: #000;
+.login-btn:hover,
+.login-btn:active,
+.login-btn:focus {
+  background-color: #d9bc2b !important; 
+  color: #000 !important;
 }
 
 .login-icon {
@@ -79,25 +81,178 @@
   background-color: #28a745; 
   border: none;
   font-weight: normal;
-  font-size: 0.9rem;
   padding: 0.75rem 1.5rem;
   transition: all 0.3s ease;
 }
 
-.landing-main .btn-success:hover {
-  background-color: #218838; 
-  color: #fff;
+.landing-main .btn-success:hover,
+.landing-main .btn-success:active,
+.landing-main .btn-success:focus {
+  background-color: #218838 !important; 
+  color: #fff !important;
 }
 
-@media (max-width: 768px) {
-  .landing-title {
-    font-size: 2rem;
-  }
-  .landing-logo {
-    width: 120px;
-  }
-  .login-btn {
-    font-size: 0.9rem; 
-    padding: 0.5rem 1rem;
-  }
+/* LOGIN PAGE */
+
+.login-home {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.home-btn {
+  background-color: #ffffff; 
+  color: #333333;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+  border: none;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.home-btn:hover,
+.home-btn:active,
+.home-btn:focus {
+  background-color: #eeeeee !important; 
+  color: #000 !important;
+}
+
+.login-logo {
+  width: 75px;
+  height: auto;
+}
+
+.form-label {
+  text-align: left;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  width: 100%;
+  display: block;
+}
+
+.login-form .form-control {
+  width: 100%;
+  min-width: 450px;
+  padding: 0.5rem 0.75rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.login-form .btn-success {
+  width: auto;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto 0 auto; 
+}
+
+.error-text {
+  font-weight: bold;
+  font-size: 0.8rem;
+  color: red;
+}
+
+.login-heading-section h1 {
+  margin-top: 2.5rem;
+}
+
+/* SUBMIT INQUIRY PAGE */
+
+.submit-inquiry-page {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #ffffff, #fedc33);
+  position: relative;
+}
+
+.page-header {
+  padding: 1rem 2rem;
+  background-color: #fedc33;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-header .landing-title {
+  color: #ffffff;
+}
+
+.section-card {
+  background: #ffffff;
+  padding: 3rem 4rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 90%;
+  max-width: 1400px;
+  margin: 1rem auto 1rem auto;
+}
+
+.section-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.section-card .form-control,
+.section-card .form-select,
+.section-card textarea.form-control {
+  width: 100%;
+  min-width: 0;          
+  padding: 0.5rem 0.75rem;
+  box-sizing: border-box;
+}
+
+.section-card textarea.form-control {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.section-card h5 {
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #333333;
+  text-align: left;
+}
+
+.section-form .btn-success {
+  width: auto;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: right;
+  margin: 1rem 0 0 auto; 
+}
+
+.submit-btn-wrapper {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.section-card input[type="file"] {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.section-card input[type="file"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

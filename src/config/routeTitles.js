@@ -1,8 +1,8 @@
 const routeTitles = {
   "/": "IMS | Home",
   "/login": "IMS | Login",
-  "/forgot-password": "Forgot Password",
-  "/reset-password/:token": "Reset Password",
+  "/submit-inquiry": "IMS | Submit Inquiry",
+  "/dashboard": "IMS | Dashboard",
 };
 
 export default routeTitles;
