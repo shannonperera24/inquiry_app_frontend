@@ -29,7 +29,7 @@ const Login = () => {
               localStorage.setItem('username', user.uEmail);
               localStorage.setItem('user_role', user.role);
               localStorage.setItem('user_id', user.userId);
-              navigate('/dashboard');
+              navigate('/home');
           } else {
               setError('Login failed. No token received.');
           }
