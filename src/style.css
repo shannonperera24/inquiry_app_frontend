@@ -60,7 +60,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
   gap: 2rem; 
   text-align: center;
 }
@@ -258,7 +259,32 @@ button:focus {
   box-shadow: none !important;
 }
 
+.attachments-list {
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.attachments-list ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.attachments-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.attachments-list .file-name {
+  word-break: break-word;
+}
+
+
 /* HOME PAGE */
+
 .dashboard-wrapper {
   display: flex;
   height: 100vh;

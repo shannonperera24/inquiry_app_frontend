@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-
-axios.defaults.withCredentials = true;
+import { toast } from 'react-toastify'
 
 const SubmitInquiry = () => {
     const [values, setValues] = useState({
@@ -16,10 +15,13 @@ const SubmitInquiry = () => {
         rEmail: '',
         phoneNo: '',
         rank: '',
-        estb: ''
+        estb: '',
+        nic: ''
     });
 
     const [categories, setCategories] = useState([]);
+    const [ranks, setRanks] = useState([]);
+    const [establishments, setEstablishments] = useState([]);
     const [attachments, setAttachments] = useState([]);
     const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
     const [officerFound, setOfficerFound] = useState(null);
@@ -31,15 +33,21 @@ const SubmitInquiry = () => {
     const handleAutoFill = () => {}
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchDropdowns = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/categories");
-                setCategories(res.data);
+                const [catRes, rankRes, estbRes] = await Promise.all([
+                    axios.get("http://localhost:3000/categories"),
+                    axios.get("http://localhost:3000/ranks"),
+                    axios.get("http://localhost:3000/establishments"),
+                ]);
+                setRanks(rankRes.data);
+                setEstablishments(estbRes.data);
+                setCategories(catRes.data);
             } catch (error) {
-                console.error("Error fetching categories:", error);
+                console.error("Error fetching dropdown data:", error);
             }
         };
-        fetchCategories();
+        fetchDropdowns();
     }, []);
 
     const handleFileChange = (e) => {
@@ -53,27 +61,50 @@ const SubmitInquiry = () => {
         setAttachments(validFiles);
     };
 
+    const handleRemoveFile = (indexToRemove) => {
+        setAttachments(prev =>
+            prev.filter((_, index) => index !== indexToRemove)
+        );
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError('');
 
-        const formData = new FormData();
-        Object.keys(values).forEach((key) => {
-            formData.append(key, values[key] ?? "");
-        });
-
-        attachments.forEach((file) => {
-            formData.append("attachments", file);
-        });
-
         try {
-        await axios.post('http://localhost:3000/inquiries', formData);
+            const formData = new FormData();
 
-        alert('Inquiry submitted successfully!');
-        navigate('/');
+            const inquiryData = {
+                subject: values.subject,
+                inquiryText: values.inquiryText,
+                categoryId: Number(values.categoryId),
+                newRequester: {
+                    requesterType: values.requesterType,
+                    officerRegNo: values.requesterType === 'army' ? values.officerRegNo : undefined,
+                    nic: values.requesterType === 'civil' ? values.nic : undefined,
+                    rFirstName: values.rFirstName,
+                    rLastName: values.rLastName,
+                    rEmail: values.rEmail,
+                    phoneNo: values.phoneNo,
+                    rankId: values.rank ? Number(values.rank) : undefined,
+                    estbId: values.estb ? Number(values.estb) : undefined,
+                },
+            };
+
+            formData.append('data', JSON.stringify(inquiryData));
+
+            attachments.forEach(file => formData.append('attachments', file));
+            
+            await axios.post('http://localhost:3000/inquiries/public', formData);
+            toast.success("Inquiry submitted successfully!");
+            navigate('/');
         } catch (err) {
-        console.error(err);
-        setError('Failed to submit inquiry.');
+            console.error(err);
+            const message =
+                err.response?.data?.message?.[0] ||
+                err.response?.data?.message ||
+                "Failed to submit inquiry.";
+            toast.error(message);
         }
     }
 
@@ -114,7 +145,7 @@ const SubmitInquiry = () => {
                         </div>
                         <div>
                             <label className='form-label'>Inquiry:</label>
-                            <textarea type='text' className='form-control' placeholder='Enter inquiry'
+                            <textarea className='form-control' placeholder='Enter inquiry'
                             value={values.inquiryText} onChange={(e) => setValues({...values, inquiryText: e.target.value})}
                             required />
                         </div>
@@ -128,11 +159,17 @@ const SubmitInquiry = () => {
                             multiple onChange={handleFileChange}
                             accept='.pdf, .docx, .jpg, .jpeg, .png' />
                             {attachments.length > 0 && (
-                                <div style={{ marginTop: "1rem" }}>
+                                <div className='attachments-list'>
                                     <strong>Files Selected:</strong>
                                     <ul>
                                         {attachments.map((file, index) => (
-                                            <li key={index}>{file.name}</li>
+                                            <li key={index}>
+                                                <span className='file-name'>{file.name}</span>
+                                                <button type='button' className='btn btn-sm btn-danger'
+                                                onClick={() => handleRemoveFile(index)}>
+                                                    Remove
+                                                </button>
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>
@@ -149,14 +186,20 @@ const SubmitInquiry = () => {
                             required>
                                 <option value="">-Select-</option>
                                 <option value="army">Army</option>
-                                <option value="civilian">Civilian</option>
+                                <option value="civil">Civil</option>
                             </select>
                         </div>
                         <div className='mb-4'>
                             <label className='form-label'>Officer Registration Number:</label>
                             <input type='text' className='form-control' placeholder='Enter officer registration number'
                             value={values.officerRegNo} onChange={(e) => setValues({...values, officerRegNo: e.target.value})}
-                            disabled={values.requesterType === "civilian"} />
+                            disabled={values.requesterType === "civil"} />
+                        </div>
+                        <div className='mb-4'>
+                            <label className='form-label'>NIC:</label>
+                            <input type='text' className='form-control' placeholder='Enter NIC'
+                            value={values.nic} onChange={(e) => setValues({...values, nic: e.target.value})}
+                            disabled={values.requesterType === "army"} />
                         </div>
                         <div className='mb-4'>
                             <label className='form-label'>First Name:</label>
@@ -184,15 +227,29 @@ const SubmitInquiry = () => {
                         </div>
                         <div className='mb-4'>
                             <label className='form-label'>Rank:</label>
-                            <input type='text' className='form-control' placeholder='Enter rank'
-                            value={values.rank} onChange={(e) => setValues({...values, rank: e.target.value})}
-                            disabled={values.requesterType === "civilian"} />
+                            <select className='form-select' value={values.rank}
+                            onChange={(e) => setValues({ ...values, rank: e.target.value })}
+                            disabled={values.requesterType === "civil"}>
+                                <option value="">-Select-</option>
+                                {ranks.map((r) => (
+                                    <option key={r.rank_id} value={r.rank_id}>
+                                        {r.rank_name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div>
                             <label className='form-label'>Establishment:</label>
-                            <input type='text' className='form-control' placeholder='Enter establishment'
-                            value={values.estb} onChange={(e) => setValues({...values, estb: e.target.value})}
-                            disabled={values.requesterType === "civilian"} />
+                            <select className='form-select' value={values.estb}
+                            onChange={(e) => setValues({ ...values, estb: e.target.value })}
+                            disabled={values.requesterType === "civil"}>
+                                <option value="">-Select-</option>
+                                {establishments.map((e) => (
+                                    <option key={e.estb_id} value={e.estb_id}>
+                                        {e.estb_name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 
