@@ -14,6 +14,10 @@ import Categories from './pages/Categories'
 import Users from './pages/Users'
 import Profile from './pages/Profile'
 import ViewInquiry from './pages/ViewInquiry'
+import AddCategory from './pages/AddCategory'
+import EditCategory from './pages/EditCategory'
+import AddUser from './pages/AddUser'
+import EditUser from './pages/EditUser'
 
 function TitleHandler () {
   const location = useLocation();
@@ -40,7 +44,11 @@ function App() {
           <Route path='view-inquiry/:inquiry_id' element={<ViewInquiry />} />
           <Route path='requesters' element={<Requesters />} />
           <Route path='categories' element={<Categories />} />
+          <Route path='add-category' element={<AddCategory />} />
+          <Route path='edit-category/:category_id' element={<EditCategory />} />
           <Route path='users' element={<Users />} />
+          <Route path='add-user' element={<AddUser />} />
+          <Route path='edit-user/:user_id' element={<EditUser />} />
           <Route path='profile' element={<Profile />} />
         </Route>
       </Routes>

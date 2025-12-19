@@ -101,11 +101,13 @@ const Inquiries = () => {
   return (
     <div className="section-card">
       <div className="row mb-3">
-        <div className="col-md-4">
+        <div className="col-md-12">
           <input type="text" className="form-control"
           placeholder="Search by Subject" value={search}
           onChange={(e) => setSearch(e.target.value)} />
         </div>
+      </div>
+      <div className="row mb-3">
         <div className="col-md-3">
           <select className="form-select" value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}>
@@ -126,9 +128,15 @@ const Inquiries = () => {
             ))}
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <button className="btn btn-secondary w-100 reset-button" onClick={resetFilters}>
             Reset
+          </button>
+        </div>
+        <div className="col-md-3 add-button-wrapper">
+          <button className="btn btn-success add-button"
+            onClick={() => navigate("/submit-inquiry")}>
+            Submit Inquiry
           </button>
         </div>
       </div>

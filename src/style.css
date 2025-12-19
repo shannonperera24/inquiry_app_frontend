@@ -505,10 +505,23 @@ button:focus {
 .reset-button {
   background-color: #fedc33; 
   border: none;
+  width: 180px !important;
+  height: 39px;
 }
 
 .reset-button:hover,
 .reset-button:active,
 .reset-button:focus {
   background-color: #d9bc2b !important; 
+}
+
+/* CATEGORIES PAGE */
+
+.add-button {
+  width: 180px;
+}
+
+.add-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
