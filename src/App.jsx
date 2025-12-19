@@ -13,6 +13,7 @@ import Requesters from './pages/Requesters'
 import Categories from './pages/Categories'
 import Users from './pages/Users'
 import Profile from './pages/Profile'
+import ViewInquiry from './pages/ViewInquiry'
 
 function TitleHandler () {
   const location = useLocation();
@@ -36,6 +37,7 @@ function App() {
         <Route path="/home" element={<Home />}>
           <Route index element={<Dashboard />} />
           <Route path='inquiries' element={<Inquiries />} />
+          <Route path='view-inquiry/:inquiry_id' element={<ViewInquiry />} />
           <Route path='requesters' element={<Requesters />} />
           <Route path='categories' element={<Categories />} />
           <Route path='users' element={<Users />} />

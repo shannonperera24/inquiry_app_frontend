@@ -26,11 +26,7 @@ const SubmitInquiry = () => {
     const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
     const [officerFound, setOfficerFound] = useState(null);
     const [error, setError] = useState('');
-    const navigate = useNavigate()
-
-    //FIX
-    const handleOfficerLookup = async () => {}
-    const handleAutoFill = () => {}
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchDropdowns = async () => {

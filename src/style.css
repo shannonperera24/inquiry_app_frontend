@@ -500,3 +500,15 @@ button:focus {
   box-sizing: border-box;
 }
 
+/* INQUIRIES PAGE */
+
+.reset-button {
+  background-color: #fedc33; 
+  border: none;
+}
+
+.reset-button:hover,
+.reset-button:active,
+.reset-button:focus {
+  background-color: #d9bc2b !important; 
+}
