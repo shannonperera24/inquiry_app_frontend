@@ -536,3 +536,18 @@ button:focus {
 .wide-table {
   min-width: 1200px;
 }
+
+/* PROFILE PAGE */
+
+.card-footer.right {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}

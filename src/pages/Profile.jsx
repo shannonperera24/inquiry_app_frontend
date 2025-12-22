@@ -15,15 +15,18 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const [profileRes, responsesRes] = await Promise.all([
-          axios.get("http://localhost:3000/users/profile", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get("http://localhost:3000/responses/my", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
-        setUser(profileRes.data);
+        const profileRes = await axios.get("http://localhost:3000/users/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const profile = profileRes.data;
+        if (!profile?.userId) throw new Error("Profile not found");
+        setUser(profile);
+
+        const responsesRes = await axios.get(
+          `http://localhost:3000/inquiries/responses/user/${profile.userId}`,
+          { headers: { Authorization: `Bearer ${token}` }}
+        );
+        
         const sortedResponses = responsesRes.data.sort(
           (a, b) => new Date(b.rCreatedAt) - new Date(a.rCreatedAt),
         )
@@ -48,36 +51,36 @@ const Profile = () => {
         <h3>User Details</h3>
       </div>
 
-      <div className="card-body">
+      <div className="user-details-grid">
         <div className="detail-row">
-          <span>User ID</span>
-          <strong>{user.userId}</strong>
+          <span>User ID:</span>
+          <strong>{user?.userId}</strong>
         </div>
         <div className="detail-row">
-          <span>First Name</span>
-          <strong>{user.uFirstName}</strong>
+          <span>First Name:</span>
+          <strong>{user?.uFirstName}</strong>
         </div>
         <div className="detail-row">
-          <span>Last Name</span>
-          <strong>{user.uLastName}</strong>
+          <span>Last Name:</span>
+          <strong>{user?.uLastName}</strong>
         </div>
         <div className="detail-row">
-          <span>Department</span>
-          <strong>{user.department}</strong>
+          <span>Department:</span>
+          <strong>{user?.department}</strong>
         </div>
         <div className="detail-row">
-          <span>Email</span>
-          <strong>{user.uEmail}</strong>
+          <span>Email:</span>
+          <strong>{user?.uEmail}</strong>
         </div>
         <div className="detail-row">
-          <span>Role</span>
-          <strong>{user.role}</strong>
+          <span>Role:</span>
+          <strong>{user?.role}</strong>
         </div>
       </div>
       <div className="card-footer right">
         <button
-          className="btn-primary"
-          onClick={() => navigate('/change-password')}
+          className="btn btn-secondary w-100 reset-button"
+          onClick={() => navigate('/home/change-password')}
         >
           Change Password
         </button>
@@ -110,8 +113,8 @@ const Profile = () => {
                   <td>{r.responseId}</td>
                   <td className="truncate">{r.responseText}</td>
                   <td className="text-center">
-                    <button className="btn btn-sm btn-primary me-2"
-                      onClick={() => navigate(`/home/view-inquiry/${i.inquiryId}`)}>
+                    <button className="btn btn-sm btn-primary"
+                      onClick={() => navigate(`/home/view-inquiry/${r.inquiryId}`)}>
                       View
                     </button>
                   </td>

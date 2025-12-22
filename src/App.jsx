@@ -18,6 +18,7 @@ import AddCategory from './pages/AddCategory'
 import EditCategory from './pages/EditCategory'
 import AddUser from './pages/AddUser'
 import EditUser from './pages/EditUser'
+import ChangePassword from './pages/ChangePassword'
 
 function TitleHandler () {
   const location = useLocation();
@@ -50,6 +51,7 @@ function App() {
           <Route path='add-user' element={<AddUser />} />
           <Route path='edit-user/:user_id' element={<EditUser />} />
           <Route path='profile' element={<Profile />} />
+          <Route path='change-password' element={<ChangePassword />} />
         </Route>
       </Routes>
     </BrowserRouter>
