@@ -20,6 +20,7 @@ import AddUser from './pages/AddUser'
 import EditUser from './pages/EditUser'
 import ChangePassword from './pages/ChangePassword'
 import SubmitResponse from './pages/SubmitResponse'
+import ViewRequester from './pages/ViewRequester'
 
 function TitleHandler () {
   const location = useLocation();
@@ -43,6 +44,9 @@ function TitleHandler () {
     } else if (path.startsWith("/home/edit-user/")) {
       const id = path.split("/").pop();
       document.title = `Edit User #${id} | IMS`;
+    } else if (path.startsWith("/home/view-requester/")) {
+      const id = path.split("/").pop();
+      document.title = `View Requester #${id} | IMS`;
     } else {
       // Fallback for all other routes
       document.title = "IMS";
@@ -64,6 +68,7 @@ function App() {
           <Route path='inquiries' element={<Inquiries />} />
           <Route path='view-inquiry/:inquiry_id' element={<ViewInquiry />} />
           <Route path='requesters' element={<Requesters />} />
+          <Route path='view-requester/:requester_id' element={<ViewRequester />} />
           <Route path='categories' element={<Categories />} />
           <Route path='add-category' element={<AddCategory />} />
           <Route path='edit-category/:category_id' element={<EditCategory />} />

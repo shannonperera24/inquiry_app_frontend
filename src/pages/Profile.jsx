@@ -114,7 +114,7 @@ const Profile = () => {
                   <td className="truncate">{r.responseText}</td>
                   <td className="text-center">
                     <button className="btn btn-sm btn-primary"
-                      onClick={() => navigate(`/home/view-inquiry/${r.inquiryId}`)}>
+                      onClick={() => navigate(`/home/view-inquiry/${r.inquiry?.inquiryId}`)}>
                       View
                     </button>
                   </td>

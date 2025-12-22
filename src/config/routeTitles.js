@@ -6,6 +6,7 @@ const routeTitles = {
   "/home/inquiries": "Inquiries",
   "/home/view-inquiry": "View Inquiry",
   "/home/requesters": "Requesters",
+  "/home/view-requester": "View Requester",
   "/home/categories": "Categories",
   "/home/add-category": "Add Category",
   "/home/edit-category": "Edit Category",
