@@ -222,9 +222,8 @@ button:focus {
   resize: vertical;
 }
 
-.section-card h5 {
+.section-card h3 {
   margin-bottom: 1rem;
-  font-weight: bold;
   color: #333333;
   text-align: left;
 }
@@ -524,6 +523,7 @@ button:focus {
 
 .add-button {
   width: 180px;
+  height: 39px;
 }
 
 .add-button-wrapper {
@@ -550,4 +550,22 @@ button:focus {
   justify-content: space-between;
   padding: 4px 0;
   border-bottom: 1px solid #eee;
+}
+
+/* VIEW INQUIRY PAGE */
+
+.status-text {
+  font-weight: bold;
+}
+
+.status-text.red {
+  color: #ef4444 !important;
+}
+
+.status-text.blue {
+  color: #3b82f6 !important; 
+}
+
+.status-text.green {
+  color: #22c55e !important; 
 }

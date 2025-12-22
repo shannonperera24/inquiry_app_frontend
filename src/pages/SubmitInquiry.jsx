@@ -124,7 +124,7 @@ const SubmitInquiry = () => {
             <div className="landing-main d-flex flex-column align-items-center justify-content-center">
                 <form className='section-form mb-4' onSubmit={handleSubmit}>
                     <div className='section-card'>
-                        <h5>INQUIRY DETAILS</h5>
+                        <h3>Inquiry Details</h3>
                         <div className='mb-4'>
                             <label className='form-label'>Category:</label>
                             <select className='form-select'value={values.categoryId} 
@@ -153,7 +153,7 @@ const SubmitInquiry = () => {
                     </div>
 
                     <div className='section-card'>
-                        <h5>ATTACHMENTS</h5>
+                        <h3>Attachments</h3>
                         <div>
                             <label className='form-label'>File types allowed: pdf, docx, jpg, png</label>
                             <input type='file' className='form-control'
@@ -179,7 +179,7 @@ const SubmitInquiry = () => {
                     </div>
 
                     <div className='section-card'>
-                        <h5>REQUESTER DETAILS</h5>
+                        <h3>Requester Details</h3>
                         <div className='mb-4'>
                             <label className='form-label'>Requester Type:</label>
                             <select className='form-select' value={values.requesterType}

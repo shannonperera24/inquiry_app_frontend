@@ -13,7 +13,8 @@ const routeTitles = {
   "/home/add-user": "Add User",
   "/home/edit-user": "Edit User",
   "/home/profile": "Profile",
-  "/home/change-password": "Change Password"
+  "/home/change-password": "Change Password",
+  "/home/submit-response": "Submit Response"
 };
 
 export default routeTitles;

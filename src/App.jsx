@@ -19,14 +19,34 @@ import EditCategory from './pages/EditCategory'
 import AddUser from './pages/AddUser'
 import EditUser from './pages/EditUser'
 import ChangePassword from './pages/ChangePassword'
+import SubmitResponse from './pages/SubmitResponse'
 
 function TitleHandler () {
   const location = useLocation();
   useEffect(() => {
-    let path = location.pathname;
-    const title = routeTitles[path]
-      ?`${routeTitles[path]} | IMS`: 'IMS';
-    document.title = title;
+    const path = location.pathname;
+    // Direct match
+    if (routeTitles[path]) {
+      document.title = `${routeTitles[path]} | IMS`;
+      return;
+    }
+    // Handle dynamic routes
+    if (path.startsWith("/home/view-inquiry/")) {
+      const id = path.split("/").pop();
+      document.title = `View Inquiry #${id} | IMS`;
+    } else if (path.startsWith("/home/submit-response/")) {
+      const id = path.split("/").pop();
+      document.title = `Submit Response #${id} | IMS`;
+    } else if (path.startsWith("/home/edit-category/")) {
+      const id = path.split("/").pop();
+      document.title = `Edit Category #${id} | IMS`;
+    } else if (path.startsWith("/home/edit-user/")) {
+      const id = path.split("/").pop();
+      document.title = `Edit User #${id} | IMS`;
+    } else {
+      // Fallback for all other routes
+      document.title = "IMS";
+    }
   }, [location.pathname]);
   return null;
 }
@@ -52,6 +72,7 @@ function App() {
           <Route path='edit-user/:user_id' element={<EditUser />} />
           <Route path='profile' element={<Profile />} />
           <Route path='change-password' element={<ChangePassword />} />
+          <Route path='submit-response/:inquiry_id' element={<SubmitResponse />} />
         </Route>
       </Routes>
     </BrowserRouter>

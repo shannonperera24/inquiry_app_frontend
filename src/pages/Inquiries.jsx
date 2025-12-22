@@ -105,6 +105,12 @@ const Inquiries = () => {
   const currentItems = filtered.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
+  const statusClass = {
+    pending: "red",
+    in_progress: "blue",
+    resolved: "green",
+  };
+
   if (loading) return <p>Loading inquiries...</p>;
   if (error) return <p>{error}</p>;
 
@@ -176,7 +182,9 @@ const Inquiries = () => {
                   <td>{i.category?.categoryName || "-"}</td>
                   <td>{i.subject}</td>
                   <td>{i.requester?.requesterId}</td>
-                  <td className="text-capitalize">{i.status.replace("_", " ")}</td>
+                  <td className={`text-capitalize status-text ${statusClass[i.status] || ""}`}>
+                    {i.status.replace("_", " ")}
+                  </td>
                   <td className="text-center">
                     <button className="btn btn-sm btn-primary me-2"
                       onClick={() => navigate(`/home/view-inquiry/${i.inquiryId}`)}>
