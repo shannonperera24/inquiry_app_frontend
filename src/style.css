@@ -515,6 +515,11 @@ button:focus {
   background-color: #d9bc2b !important; 
 }
 
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* CATEGORIES PAGE */
 
 .add-button {
@@ -524,4 +529,10 @@ button:focus {
 .add-button-wrapper {
   display: flex;
   justify-content: flex-end;
+}
+
+/* REQUESTERS PAGE */
+
+.wide-table {
+  min-width: 1200px;
 }

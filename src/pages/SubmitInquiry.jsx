@@ -94,7 +94,7 @@ const SubmitInquiry = () => {
             await axios.post('http://localhost:3000/inquiries/public', formData);
             toast.success("Inquiry submitted successfully!");
             const token = localStorage.getItem('token');
-            if (token) {
+            if (!token) {
                 navigate('/home/inquiries');
             } else {
                 navigate('/');

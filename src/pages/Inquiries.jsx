@@ -18,6 +18,9 @@ const Inquiries = () => {
 
   const navigate = useNavigate();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,6 +63,7 @@ const Inquiries = () => {
       );
     }
     setFiltered(data);
+    setCurrentPage(1);
   }, [search, statusFilter, categoryFilter, inquiries]);
 
   const resetFilters = () => {
@@ -67,6 +71,7 @@ const Inquiries = () => {
     setStatusFilter("");
     setCategoryFilter("");
     setFiltered(inquiries);
+    setCurrentPage(1);
   };
 
   const handleDelete = async (id) => {
@@ -94,6 +99,11 @@ const Inquiries = () => {
       toast.error("Failed to delete inquiry");
     }
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filtered.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
   if (loading) return <p>Loading inquiries...</p>;
   if (error) return <p>{error}</p>;
@@ -153,14 +163,14 @@ const Inquiries = () => {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 ? (
+            {currentItems.length === 0 ? (
               <tr>
                 <td colSpan="6" className="text-center">
                   No inquiries found
                 </td>
               </tr>
             ) : (
-              filtered.map((i) => (
+              currentItems.map((i) => (
                 <tr key={i.inquiryId}>
                   <td>{i.inquiryId}</td>
                   <td>{i.category?.categoryName || "-"}</td>
@@ -183,6 +193,24 @@ const Inquiries = () => {
           </tbody>
         </table>
       </div>
+
+      {totalPages > 1 && (
+        <div className="d-flex justify-content-end mt-3">
+          <div className="d-flex align-items-center gap-2">
+            <button className="btn btn-sm btn-secondary"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}>
+                Prev
+            </button>
+            <span>Page {currentPage} of {totalPages}</span>
+            <button className="btn btn-sm btn-secondary"
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}>
+                Next
+            </button>
+          </div>
+        </div>
+      )}
     </div> 
   );
 };

@@ -19,6 +19,9 @@ const Requesters = () => {
 
   const navigate = useNavigate();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,15 +61,14 @@ const Requesters = () => {
           r.nic?.toLowerCase().includes(search.toLowerCase())
       );
     }
-
     if (rankFilter) {
       data = data.filter((r) => r.rank?.rank_id === Number(rankFilter));
     }
-
     if (estbFilter) {
-      data = data.filter((r) => r.estb?.estb_id === Number(estbFilter));
+      data = data.filter((r) => r.establishment?.estb_id === Number(estbFilter));
     }
     setFiltered(data);
+    setCurrentPage(1);
   }, [search, rankFilter, estbFilter, requesters]);
 
   const resetFilters = () => {
@@ -74,6 +76,7 @@ const Requesters = () => {
     setRankFilter("");
     setEstbFilter("");
     setFiltered(requesters);
+    setCurrentPage(1);
   };
 
   const handleDelete = async (id) => {
@@ -102,17 +105,24 @@ const Requesters = () => {
     }
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filtered.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
   if (loading) return <p>Loading requesters...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="section-card">
       <div className="row mb-3">
-        <div className="col-md-4">
+        <div className="col-md-12">
           <input type="text" className="form-control"
           placeholder="Search by Officer Reg No, NIC, or Name" value={search}
           onChange={(e) => setSearch(e.target.value)} />
         </div>
+      </div>
+      <div className="row mb-3">
         <div className="col-md-3">
           <select className="form-select" value={rankFilter}
             onChange={(e) => setRankFilter(e.target.value)}>
@@ -135,14 +145,14 @@ const Requesters = () => {
             ))}
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <button className="btn btn-secondary w-100 reset-button" onClick={resetFilters}>
             Reset
           </button>
         </div>
       </div>
       <div className="table-responsive">
-        <table className="table table-striped align-middle">
+        <table className="table table-striped align-middle text-nowrap wide-table">
           <thead>
             <tr>
               <th>Requester ID</th>
@@ -156,22 +166,22 @@ const Requesters = () => {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 ? (
+            {currentItems.length === 0 ? (
               <tr>
                 <td colSpan="8" className="text-center">
                   No requesters found
                 </td>
               </tr>
             ) : (
-              filtered.map((r) => (
+              currentItems.map((r) => (
                 <tr key={r.requesterId}>
                   <td>{r.requesterId}</td>
                   <td>{r.officerRegNo || "-"}</td>
                   <td>{r.nic || "-"}</td>
-                  <td>{r.firstName}</td>
-                  <td>{r.lastName}</td>
-                  <td>{r.rank?.rankName || "-"}</td>
-                  <td>{r.estb?.estbName || "-"}</td>
+                  <td>{r.rFirstName || "-"}</td>
+                  <td>{r.rLastName || "-"}</td>
+                  <td>{r.rank?.rank_name || "-"}</td>
+                  <td>{r.establishment?.estb_name || "-"}</td>
                   <td className="text-center">
                     <button className="btn btn-sm btn-primary me-2"
                       onClick={() => navigate(`/home/view-requester/${r.requesterId}`)}>
@@ -188,6 +198,24 @@ const Requesters = () => {
           </tbody>
         </table>
       </div>
+
+      {totalPages > 1 && (
+        <div className="d-flex justify-content-end mt-3">
+          <div className="d-flex align-items-center gap-2">
+            <button className="btn btn-sm btn-secondary"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}>
+                Prev
+            </button>
+            <span>Page {currentPage} of {totalPages}</span>
+            <button className="btn btn-sm btn-secondary"
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}>
+                Next
+            </button>
+          </div>
+        </div>
+      )}
     </div> 
   );
 };
