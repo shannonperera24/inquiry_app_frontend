@@ -27,7 +27,7 @@ const Categories = () => {
         });  
         const sorted = [...res.data].sort((a, b) => a.categoryId - b.categoryId);
         setFiltered(sorted);
-        setCategories(res.data);
+        setCategories(sorted);
       } catch (err) {
         console.error(err);
         setError("Failed to load categories.");
